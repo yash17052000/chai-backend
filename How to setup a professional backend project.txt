@@ -1,0 +1,19 @@
+1. we have created chai- backend , now we create one folder also on vs code,now we will
+create one folder inside one folder we will not able to push it on github so we craete ".gitkeep" folder so that this empty temporary file 
+2.there are also .gitgenerator 
+https://mrkandreev.name/snippets/gitignore-generator/    used by chai aur code
+
+
+now we will write scripts in package.json in the script we will define its type which type of import we use,
+we will install nodemon in server 
+
+there is alos dev dependency so that there is no change in the production
+
+
+now we install  subfolers in src like middleware, utils etc
+
+the term comes middle ware --> it means it comes in middle between before reaching server and wile after a sending request to keep any impoertant check on th request 
+
+there is also one more pluggin "prettier"
+ we install it  after installng npm i -D "prettier"  we hae to insatll some file manually like .prettierrc(rc laga dena prtterier k peeche)
+
