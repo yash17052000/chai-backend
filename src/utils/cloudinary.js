@@ -9,7 +9,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const uploadOnCloudinay= async function (loacalFilePath) {
+const uploadOnCloudinary= async  (loacalFilePath)=> {
     try {
         if(!loacalFilePath)return null;
         ///upload the file on cloudinary 
@@ -18,8 +18,10 @@ const uploadOnCloudinay= async function (loacalFilePath) {
         })
         console.log(response.url);
         // file has been uploaded sucessfully 
+        
 
-        console.log("File has been upload sucessfully",response.url);
+        console.log("File has been upload sucessfully",response);
+   fs.unlinkSync(loacalFilePath)
         return response// we are returning to user
     } catch (error) {
         // now we know that the file has come on server as we have got localfilepath
@@ -29,4 +31,4 @@ const uploadOnCloudinay= async function (loacalFilePath) {
     }
 }
 
-export {uploadOnCloudinay}
+export {uploadOnCloudinary}

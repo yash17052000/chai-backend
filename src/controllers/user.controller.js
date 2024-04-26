@@ -1,7 +1,7 @@
 import { asynchandler} from "../utils/asynchandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.models.js";
-import {uploadOnCloudinay} from "../utils/cloudinary.js"
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 const registerUser=asynchandler(async (req,res)=>{
     // res.status(200).json({
@@ -21,7 +21,7 @@ const registerUser=asynchandler(async (req,res)=>{
 
     /// get user details from frontend
 const {fullName,email,username,password}=req.body
-    console.log("email:",email);
+    console.log("request of body is ....",req.body);
 
 
      // validation - not empty 
@@ -32,7 +32,7 @@ const {fullName,email,username,password}=req.body
     // check if usetr exists :username,email
 
     // if we want more value then we jhave to use "$or" 
-const existedUser =User.findOne({
+const existedUser =await User.findOne({
   $or:[{username},{email}]
  })
 if (existedUser) {
@@ -43,9 +43,15 @@ if (existedUser) {
 
  //check for images ,check for avatr
 
+ console.log("requtes files of coverimage and avatar",req.files);
 
  const avatarLocalPath=req.files?.avatar[0]?.path
- const coverImageLocalPath=req.files?.coverImage[0]?.path
+ //const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+ let coverImageLocalPath;
+ if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+     coverImageLocalPath = req.files.coverImage[0].path
+ }
  if(!avatarLocalPath)
  {
     throw new ApiError(400,"Avatar file is required")
@@ -55,8 +61,8 @@ if (existedUser) {
 
   ///upload them  to cloudinary ,avatar 
 
-const avatar=await uploadOnCloudinay(avatarLocalPath)
-const coverImage=await uploadOnCloudinay(coverImageLocalPath)
+const avatar=await uploadOnCloudinary(avatarLocalPath)
+const coverImage=await uploadOnCloudinary(coverImageLocalPath)
 
 if(!avatar)
  {
